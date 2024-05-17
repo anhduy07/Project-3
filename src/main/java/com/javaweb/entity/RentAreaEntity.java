@@ -12,13 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Entity
+@Table(name = "rentarea")
 @Getter
 @Setter
-@Table(name = "rentarea")
-public class RentAreaEntity {
+public class RentAreaEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,20 +26,7 @@ public class RentAreaEntity {
     @JoinColumn(name="buildingid")
     private BuildingEntity buildingEntity;
 
-
     @Column(name ="value")
     private String value;
-
-    @Column(name ="createddate")
-    private Date createddate;
-
-    @Column(name ="modifieddate")
-    private Date modifieddate;
-
-    @Column(name ="createdby")
-    private Date createdby;
-
-    @Column(name ="modifiedby")
-    private Date modifiedby;
 
 }

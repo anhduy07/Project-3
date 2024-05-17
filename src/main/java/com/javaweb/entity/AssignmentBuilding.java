@@ -5,13 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
+@Table(name = "assignmentbuilding")
 @Getter
 @Setter
-@Table(name = "assignmentbuilding")
-public class AssignmentBuilding {
+public class AssignmentBuilding  extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,17 +22,5 @@ public class AssignmentBuilding {
     @ManyToOne
     @JoinColumn(name = "staffid")
     private UserEntity staffs;
-
-    @Column(name = "createddate")
-    private Date createdDate;
-
-    @Column(name = "modifieddate")
-    private Date modifiedDate;
-
-    @Column(name = "createdby")
-    private Date createdBy;
-
-    @Column(name = "modifiedby")
-    private Date modifiedBy;
 
 }

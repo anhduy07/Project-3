@@ -10,10 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "building")
 @Getter
 @Setter
-@Table(name = "building")
-public class BuildingEntity {
+public class BuildingEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,6 @@ public class BuildingEntity {
 
     @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY)
     List<AssignmentBuilding> assignmentBuildings = new ArrayList<>();
-
 
     @Column(name = "name")
     private String name;
@@ -106,23 +105,10 @@ public class BuildingEntity {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "createddate")
-    private Date createdDate;
-
-    @Column(name = "modifieddate")
-    private Date modifiedDate;
-
-    @Column(name = "createdby")
-    private Date createdBy;
-
-    @Column(name = "modifiedby")
-    private Date modifiedBy;
-
     @Column(name = "managername")
     private String managerName;
 
     @Column(name = "managerphone")
     private String managerPhone;
-
 
 }

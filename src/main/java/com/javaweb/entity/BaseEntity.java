@@ -30,7 +30,7 @@ public class BaseEntity implements Serializable {
 
     @Column(name = "createdby")
     @CreatedBy
-    private Date createdBy;
+    private String createdBy;
 
     @Column(name = "modifieddate")
     @LastModifiedDate
@@ -38,5 +38,7 @@ public class BaseEntity implements Serializable {
 
     @Column(name = "modifiedby")
     @LastModifiedBy
-    private Date modifiedBy;
+    private String modifiedBy;
+
+
 }
