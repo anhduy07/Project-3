@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,10 +17,10 @@ public class BuildingEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     List<RentAreaEntity> areaEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "buildingEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     List<AssignmentBuilding> assignmentBuildings = new ArrayList<>();
 
     @Column(name = "name")
@@ -103,12 +102,13 @@ public class BuildingEntity extends BaseEntity {
     private String map;
 
     @Column(name = "avatar")
-    private String avatar;
+    private String image;
 
     @Column(name = "managername")
     private String managerName;
 
     @Column(name = "managerphone")
     private String managerPhone;
+
 
 }

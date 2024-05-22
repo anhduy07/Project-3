@@ -11,12 +11,15 @@ import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
+import com.javaweb.utils.DisplayTagUtils;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +35,19 @@ public class BuildingController {
     private BuildingConverter buildingConverter;
 
     @GetMapping(value = "/admin/building-list")
-    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
+    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
+        DisplayTagUtils.of(request, buildingSearchRequest);
         mav.addObject("staffs", userService.getStaffs());
         mav.addObject("districtCode", districtCode.district());
         mav.addObject("typeCodes", typeCode.getTypeCode());
         //Xuong DB lay data len
         System.out.println(buildingService.toString());
-        List<BuildingSearchResponse> result = buildingService.queryBuildings(buildingSearchRequest);
+        List<BuildingSearchResponse> result = buildingService.queryBuildings(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+        buildingSearchRequest.setListResult(result);
+        int total=buildingService.countTotalItem(buildingSearchRequest);
+        buildingSearchRequest.setTotalItems(total);
+        System.out.println("total : "+total);
         mav.addObject("buildings", result);
         return mav;
     }

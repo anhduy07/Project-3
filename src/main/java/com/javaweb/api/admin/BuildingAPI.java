@@ -14,6 +14,7 @@ import com.javaweb.service.IBuildingService;
 import com.javaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -37,16 +38,15 @@ import java.util.List;
         this.userRepository = userRepository;
     }
 
-        @GetMapping
-        public List<BuildingSearchResponse> loadBuildings(@RequestParam BuildingSearchRequest buildingSearchRequest) {
-            List<BuildingSearchResponse> result = buildingService.queryBuildings(buildingSearchRequest);
-            return result;
-        }
+    @GetMapping
+    public List<BuildingSearchResponse> loadBuildings(@RequestParam BuildingSearchRequest buildingSearchRequest) {
+        List<BuildingSearchResponse> result = buildingService.queryBuildings(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+        return result;
+    }
 
 
         @PostMapping
         public String addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
-            System.out.println("SEXSS");
             System.out.println(buildingDTO.getId());
             buildingService.createBuilding(buildingDTO);
             return new String("Add OR Update Building Success");
