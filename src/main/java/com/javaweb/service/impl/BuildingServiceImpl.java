@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.IBuildingService;
@@ -31,9 +31,8 @@ public class BuildingServiceImpl implements IBuildingService {
     @Autowired
     private RentAreaRepository rentAreaRepository;
     @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
-    @Autowired
     private BuildingConverter buildingConverter;
+
     @Autowired
     private UploadFileUtils uploadFileUtils;
     @Override
@@ -57,25 +56,27 @@ public class BuildingServiceImpl implements IBuildingService {
     public void createBuilding(BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
         if (buildingDTO.getId() != null) { // update
-            System.out.println("ID HERE");
-            System .out.println(buildingDTO.getId());
             buildingEntity.setImage(buildingRepository.findById(buildingDTO.getId()).get().getImage());
         }
         saveThumbnail(buildingDTO, buildingEntity);
-        buildingRepository.save(buildingEntity);
-        rentAreaRepository.deleteAllByBuildingEntity(buildingEntity);
-        if(buildingDTO.getRentArea()==null || buildingDTO.getRentArea().isEmpty()){
-            return;
-        }
+//        buildingRepository.save(buildingEntity);
+//        rentAreaRepository.deleteAllByBuildingEntity(buildingEntity);
         List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
-        List<String>rentAreaString= Arrays.asList(buildingDTO.getRentArea().split(","));
-        for (String rentArea : rentAreaString) {
-            RentAreaEntity rentAreaEntity = new RentAreaEntity();
-            rentAreaEntity.setValue(rentArea);
-            rentAreaEntity.setBuildingEntity(buildingEntity);
-            rentAreaEntities.add(rentAreaEntity);
-            rentAreaRepository.save(rentAreaEntity);
+
+        if(buildingDTO.getRentArea()!=null && !buildingDTO.getRentArea().isEmpty()){
+            List<String>rentAreaString= Arrays.asList(buildingDTO.getRentArea().split(","));
+            for (String rentArea : rentAreaString) {
+                RentAreaEntity rentAreaEntity = new RentAreaEntity();
+                rentAreaEntity.setValue(rentArea);
+                rentAreaEntity.setBuildingEntity(buildingEntity);
+                rentAreaEntities.add(rentAreaEntity);
+//            rentAreaRepository.save(rentAreaEntity);
+            }
         }
+
+        buildingEntity.setAreaEntities(rentAreaEntities);
+        buildingRepository.save(buildingEntity);
+
     }
 
     private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
@@ -92,12 +93,20 @@ public class BuildingServiceImpl implements IBuildingService {
             buildingEntity.setImage(path);
         }
     }
-
     @Override
     @Transactional
     public void deleteBuilding(Long id) {
+        BuildingEntity buildingEntity = buildingRepository.findById(id).get();
+        for(UserEntity userEntity: buildingEntity.getUserEntities()){
+            userEntity.getBuildingEntities().remove(buildingEntity);
+        }
+        buildingEntity.setUserEntities(new ArrayList<UserEntity>());
+
+
         buildingRepository.deleteById(id);
     }
+
+
 
     @Override
     public int countTotalItem(BuildingSearchRequest buildingSearchRequest) {
