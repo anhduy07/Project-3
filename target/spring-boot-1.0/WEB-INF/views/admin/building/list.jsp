@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-6">
-                                                    <label>Tên toà nhàR</label>
+                                                    <label>Tên toà nhà</label>
                                                         <%--                                                    <input type="text" class="form-control" name="name" value="${modelSearch.name}">--%>
                                                     <form:input class="form-control" path="name" />
                                                 </div>
