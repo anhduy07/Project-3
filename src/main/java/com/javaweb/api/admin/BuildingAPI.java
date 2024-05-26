@@ -1,8 +1,6 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.converter.UserConverter;
-import com.javaweb.entity.AssignmentBuilding;
-import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
@@ -13,12 +11,9 @@ import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +50,7 @@ import java.util.List;
        @DeleteMapping
         public String deleteBuilding(@RequestBody List<Long> ids) {
             //Xuong DB xoá data
-           buildingService.deleteBuilding(ids.get(0));
+           buildingService.deleteBuilding(ids);
             return new String("Delete Building Success");
         }
 
