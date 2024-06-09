@@ -218,12 +218,15 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${not empty buildingEdit.id}" >
-                                        <button type="button" class="btn btn-warning" id="btnAddOrUpdateBuilding">
-                                            Sửa toà nhà
-                                        </button>
-                                        <script>
-                                            console.log("buildingEdit.id:", "${buildingEdit.id}");
-                                        </script>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button type="button" class="btn btn-warning" id="btnAddOrUpdateBuilding">
+                                                Sửa toà nhà
+                                            </button>
+                                            <script>
+                                                console.log("buildingEdit.id:", "${buildingEdit.id}");
+                                            </script>
+                                        </security:authorize>
+
 
 
                                     </c:if>

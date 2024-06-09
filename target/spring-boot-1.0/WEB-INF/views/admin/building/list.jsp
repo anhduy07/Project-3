@@ -147,20 +147,13 @@
                                                     <input type="text" class="form-control" name="managerPhone" value="${modelSearch.managerPhone}">
                                                 </div>
                                                 <div class="col-xs-2">
-                                                    <label>Nhân viên phụ trách</label>
-                                                        <%--                                                    <select class="form-control" name="staffId" value="">--%>
-                                                        <%--                                                        <option value="">--Chọn nhân viên--</option>--%>
-                                                        <%--                                                        <option value="1">Nguyen Van A</option>--%>
-                                                        <%--                                                        <option value="3">Tran Anh Duy</option>--%>
-                                                        <%--                                                        <option value="4">Pham Van Mach</option>--%>
-                                                        <%--                                                    </select>--%>
-                                                    <form:select path="staffId" class="form-control">
-                                                        <form:option value="" label="--Chọn nhân viên--"></form:option>
-                                                        <form:options items = "${staffs}"/>
-                                                        <%--                                                        <form:option value="1" label="Nguyen Van A"></form:option>--%>
-                                                        <%--                                                        <form:option value="2" label="Tran Anh Duy"></form:option>--%>
-                                                        <%--                                                        <form:option value="3" label="Pham Van Mach"></form:option>--%>
-                                                    </form:select>
+                                                    <security:authorize access="hasRole('MANAGER')">
+                                                        <label>Nhân viên phụ trách</label>
+                                                        <form:select path="staffId" class="form-control">
+                                                            <form:option value="" label="--Chọn nhân viên--"></form:option>
+                                                            <form:options items = "${staffs}"/>
+                                                        </form:select>
+                                                    </security:authorize>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,15 +162,6 @@
                                             <div class="col-xs-12">
                                                 <div class="col-xs-6">
                                                     <form:checkboxes path="typeCode" items="${typeCodes}"/>
-                                                        <%--                                                    <label>--%>
-                                                        <%--                                                        <input type="checkbox" name="typeCode" value="noi-that">Nội thất--%>
-                                                        <%--                                                    </label>--%>
-                                                        <%--                                                    <label>--%>
-                                                        <%--                                                        <input type="checkbox" name="typeCode" value="tang-tret">Tầng trệt--%>
-                                                        <%--                                                    </label>--%>
-                                                        <%--                                                    <label>--%>
-                                                        <%--                                                        <input type="checkbox" name="typeCode" value="nguyen-can">Nguyên căn--%>
-                                                        <%--                                                    </label>--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -200,25 +184,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pull-right">
-                        <a href="/admin/building-edit">
-                            <button title="Thêm toà nhà" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
-                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                    <security:authorize access="hasRole('MANAGER')">
+                        <div class="pull-right">
+                            <a href="/admin/building-edit">
+                                <button title="Thêm toà nhà" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
+                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                        <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                    </svg>
+                                </button>
+                            </a>
+
+                            <button title="Xoá toà nhà ALL" class="btn btn-danger" id="btnDeleteBuildings" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/>
                                     <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
                                     <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                 </svg>
                             </button>
-                        </a>
+                        </div>
+                    </security:authorize>
 
-                        <button title="Xoá toà nhà ALL" class="btn btn-danger" id="btnDeleteBuildings" >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
-                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/>
-                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
-                                <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -255,17 +242,22 @@
                         <display:column property="brokerageFee" title="Phí M.G" sortable="true" />
                         <display:column title="Thao Tác">
                             <div>
-                                <button class="btn btn-sm btn-success" title="Giao toà nhà"
-                                        onclick="assignmentBuilding(${tableList.id})">
-                                    <i class="ace-icon glyphicon glyphicon-align-justify"></i>
-                                </button>
+                                <security:authorize access="hasRole('MANAGER')">
+                                    <button class="btn btn-sm btn-success" title="Giao toà nhà"
+                                            onclick="assignmentBuilding(${tableList.id})">
+                                        <i class="ace-icon glyphicon glyphicon-align-justify"></i>
+                                    </button>
+                                </security:authorize>
+
                                 <a class="btn btn-sm btn-info" title="Sửa toà nhà" href="/admin/building-edit-${tableList.id}">
                                     <i class="ace-icon fa fa-pencil-square-o"></i>
                                 </a>
-                                <button class="btn btn-sm btn-danger" title="Xoá toà nhà"
-                                        onclick="btnDeleteBuilding(${tableList.id})">
-                                    <i class="ace-icon glyphicon glyphicon-trash"></i>
-                                </button>
+                                <security:authorize access="hasRole('MANAGER')">
+                                    <button class="btn btn-sm btn-danger" title="Xoá toà nhà"
+                                            onclick="btnDeleteBuilding(${tableList.id})">
+                                        <i class="ace-icon glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </security:authorize>
                             </div>
                         </display:column>
 
