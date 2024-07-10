@@ -301,7 +301,7 @@
         if(data['staffs'] != '')
         {
             assingment(data);
-            console.log("ok");
+            alert("Giao khách hàng thành công");
         }
 
         else
@@ -359,6 +359,7 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function () {
+                alert('Bạn đã xóa thành công!');
                 location.reload();
             },
 

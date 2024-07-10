@@ -202,10 +202,17 @@
 <script>
     $('#addCustomer').click(function (e) {
         e.preventDefault();
-        var fullname = $('input[name="fullName"]').val();
-        var email = $('input[name="email"]').val();
-        var phone = $('input[name="customerPhone"]').val();
-        var demand = $('input[name="note"]').val();
+        var fullname = $('input[name="fullName"]').val().trim();
+        var email = $('input[name="email"]').val().trim();
+        var phone = $('input[name="customerPhone"]').val().trim();
+        var demand = $('input[name="note"]').val().trim();
+
+        // Check if fullname or phone is empty
+        if (fullname === '' || phone === '') {
+            alert("Bạn cần nhập đầy đủ họ tên và số điện thoại");
+            return;
+        }
+
         var formData = {
             fullName: fullname,
             email: email,

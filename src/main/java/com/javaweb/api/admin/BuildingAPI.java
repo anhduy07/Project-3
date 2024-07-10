@@ -51,7 +51,7 @@ import java.util.List;
         public String deleteBuilding(@RequestBody List<Long> ids) {
             //Xuong DB xoá data
            buildingService.deleteBuilding(ids);
-            return new String("Delete Building Success");
+           return new String("Delete Building Success");
         }
 
         @GetMapping("/{id}/staffs")

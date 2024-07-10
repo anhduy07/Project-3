@@ -1,5 +1,14 @@
 package com.javaweb.model.dto;
 
+import com.javaweb.entity.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 public class CustomerDTO extends AbstractDTO
 {
     private Long id;

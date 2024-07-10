@@ -1,5 +1,7 @@
 package com.javaweb.controller.admin;
 
+import com.javaweb.entity.CustomerEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.enums.Status;
 import com.javaweb.enums.TransactionType;
 import com.javaweb.model.dto.CustomerDTO;
@@ -11,6 +13,7 @@ import com.javaweb.service.CustomerService;
 import com.javaweb.service.TransactionTypeService;
 import com.javaweb.service.impl.UserService;
 import com.javaweb.utils.DisplayTagUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,8 @@ public class CustomerController
 
     @Autowired
     TransactionTypeService transactionTypeService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping(value = "/admin/customer-list", method = RequestMethod.GET)
     public ModelAndView customerList(@ModelAttribute CustomerSearchRequest customerSearchRequest, HttpServletRequest request)
@@ -79,6 +84,7 @@ public class CustomerController
         mav.addObject("transactionListCSKH", listCSKH);
         mav.addObject("transactionListDDX", listDDX);
         mav.addObject("statuss", Status.type());
+        
         return mav;
     }
 
