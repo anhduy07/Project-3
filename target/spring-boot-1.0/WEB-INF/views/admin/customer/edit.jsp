@@ -77,20 +77,20 @@
                                 <div class="form-group">
                                     <label class="col-xs-3">Tình trạng</label>
                                     <div class="col-xs-9">
-<%--                                        <form:select class="form-control" path="status">--%>
-<%--                                            <c:if test="${not empty statuss}">--%>
-<%--                                                <form:options items="${statuss}"></form:options>--%>
-<%--                                            </c:if>--%>
-<%--                                            <c:if test="${empty statuss}">--%>
-<%--                                                <form:option value="Chưa xử lý">Chưa xử lý</form:option>--%>
-<%--                                            </c:if>--%>
-<%--                                        </form:select>--%>
+                                            <%--                                        <form:select class="form-control" path="status">--%>
+                                            <%--                                            <c:if test="${not empty statuss}">--%>
+                                            <%--                                                <form:options items="${statuss}"></form:options>--%>
+                                            <%--                                            </c:if>--%>
+                                            <%--                                            <c:if test="${empty statuss}">--%>
+                                            <%--                                                <form:option value="Chưa xử lý">Chưa xử lý</form:option>--%>
+                                            <%--                                            </c:if>--%>
+                                            <%--                                        </form:select>--%>
 
-                                      <form:select class="form-control" path="status" id="status">
-                                         <form:options items="${statuss}"/>
-                                      </form:select>
+                                        <form:select class="form-control" path="status" id="status">
+                                            <form:options items="${statuss}"/>
+                                        </form:select>
                                     </div>
-                        </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-xs-3"></label>
                                     <div class="col-xs-9">
@@ -127,7 +127,7 @@
                     </div>
                     <c:if test="${item.key == 'CSKH'}">
                         <div class="col-xs-12">
-                            <table id="simple-table" class="table table-striped table-bordered table-hover">
+                            <table id="simple-table-CSKH" class="table table-striped table-bordered table-hover">
                                 <thead></thead>
                                 <tbody>
                                 <form:form modelAttribute="transactionListCSKH" method="get">
@@ -169,7 +169,7 @@
                     </c:if>
                     <c:if test="${item.key == 'DDX'}">
                         <div class="col-xs-12">
-                            <table id="simple-table" class="table table-striped table-bordered table-hover">
+                            <table id="simple-table-DDX" class="table table-striped table-bordered table-hover">
                                 <thead></thead>
                                 <tbody>
                                 <form:form modelAttribute="transactionListDDX">

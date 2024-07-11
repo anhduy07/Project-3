@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.converter.CustomerConverter;
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.enums.Status;
 import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerSearchRequest;
@@ -34,14 +35,28 @@ public class CustomerServiceImpl implements CustomerService
     @Autowired
     UserRepository userRepository;
 
-    @Override
-    public CustomerDTO addOrUpdateCustomer(CustomerDTO customerDTO)
-    {
-        if(!validateCreateOrUpdateCustomer(customerDTO)) return null;
-        CustomerEntity customerEntity = customerConverter.toCustomerEntity(customerDTO);
-        customerRepository.save(customerEntity);
-        return customerDTO;
+
+@Override
+public CustomerDTO addOrUpdateCustomer(CustomerDTO customerDTO) {
+    if (!validateCreateOrUpdateCustomer(customerDTO)) {
+        return null;
     }
+
+    // Lấy giá trị tình trạng từ customerDTO
+    String status = customerDTO.getStatus();
+
+    // Kiểm tra xem tình trạng có được thiết lập không
+    if(!validateCreateOrUpdateCustomer(customerDTO)) return null;
+
+    // Thiết lập giá trị tình trạng cho customerEntity
+    CustomerEntity customerEntity = customerConverter.toCustomerEntity(customerDTO);
+    customerEntity.setStatus(status); // Đặt giá trị tình trạng cho customerEntity
+
+    customerRepository.save(customerEntity); // Lưu customerEntity vào cơ sở dữ liệu
+
+    return customerDTO; // Trả về customerDTO đã được cập nhật
+}
+
 
     public boolean validateCreateOrUpdateCustomer(CustomerDTO customerDTO)
     {

@@ -102,13 +102,15 @@ public class CustomerController
     }
 
 
-
-    @RequestMapping(value = "/lien-he", method = RequestMethod.POST)
-    public ResponseEntity<?> contact(@RequestBody CustomerDTO customer)
-    {
-        if(customer.getCustomerPhone() != null && customer.getFullName() != null){
-            customerService.addOrUpdateCustomer(customer);
+@RequestMapping(value = "/lien-he", method = RequestMethod.POST)
+public ResponseEntity<?> contact(@RequestBody CustomerDTO customer) {
+    if (customer.getCustomerPhone() != null && customer.getFullName() != null) {
+        if (customer.getStatus() == null) {
+            customer.setStatus("CHUA_XU_LY"); // Set mặc định nếu không có giá trị
         }
-        return ResponseEntity.ok("");
+        customerService.addOrUpdateCustomer(customer);
     }
+    return ResponseEntity.ok("");
+}
+
 }
