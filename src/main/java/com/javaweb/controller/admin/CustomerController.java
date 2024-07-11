@@ -106,7 +106,7 @@ public class CustomerController
 public ResponseEntity<?> contact(@RequestBody CustomerDTO customer) {
     if (customer.getCustomerPhone() != null && customer.getFullName() != null) {
         if (customer.getStatus() == null) {
-            customer.setStatus("CHUA_XU_LY"); // Set mặc định nếu không có giá trị
+            customer.setStatus("Chưa xử lý"); // Set mặc định nếu không có giá trị
         }
         customerService.addOrUpdateCustomer(customer);
     }
