@@ -72,10 +72,22 @@ public class CustomerController
         return mav;
     }
 
+
     @RequestMapping(value = "/admin/customer-edit-{id}", method = RequestMethod.GET)
-    public ModelAndView customerEdit(@PathVariable("id") Long id, HttpServletRequest request)
-    {
-        ModelAndView mav = new ModelAndView("admin/customer/edit");
+    public ModelAndView customerEdit(@PathVariable("id") Long id, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+
+        // Lấy thông tin nhân viên hiện tại từ SecurityContext
+        Long staffId = SecurityUtils.getPrincipal().getId();
+
+        // Kiểm tra xem nhân viên có quyền truy cập vào khách hàng không
+        if (!customerService.canAccessCustomer(id, staffId)) {
+            // Nếu không có quyền truy cập, chuyển hướng đến trang lỗi hoặc trang không có quyền
+            mav.setViewName("admin/customer/error");
+            return mav;
+        }
+
+        // Nếu có quyền truy cập, tiếp tục xử lý và trả về trang chỉnh sửa
         CustomerDTO customerDTO = customerService.findById(id);
         List<TransactionTypeDTO> listCSKH = transactionTypeService.findByCodeAndCustomerId("CSKH", id);
         List<TransactionTypeDTO> listDDX = transactionTypeService.findByCodeAndCustomerId("DDX", id);
@@ -84,9 +96,12 @@ public class CustomerController
         mav.addObject("transactionListCSKH", listCSKH);
         mav.addObject("transactionListDDX", listDDX);
         mav.addObject("statuss", Status.type());
-        
+        mav.setViewName("admin/customer/edit");
+
         return mav;
     }
+
+
 
     @RequestMapping(value = "/lien-he", method = RequestMethod.POST)
     public ResponseEntity<?> contact(@RequestBody CustomerDTO customer)

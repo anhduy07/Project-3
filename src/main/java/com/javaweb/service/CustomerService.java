@@ -18,4 +18,8 @@ public interface CustomerService
     AssignmentCustomerDTO addAssignmentCustomerEntity(AssignmentCustomerDTO assignmentCustomerDTO);
     ResponseDTO listStaffs(Long customerId);
     CustomerDTO findById(Long id);
+
+    boolean canAccessCustomer(Long customerId, Long staffId);
+
+
 }

@@ -11,6 +11,7 @@ import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.UserRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.CustomerService;
 import com.javaweb.utils.NumberUtils;
 import com.javaweb.utils.StringUtils;
@@ -118,4 +119,37 @@ public class CustomerServiceImpl implements CustomerService
         CustomerEntity customerEntity = customerRepository.findById(id).get();
         return customerConverter.toCustomerDTO(customerEntity);
     }
+
+    @Override
+    public boolean canAccessCustomer(Long customerId, Long staffId) {
+        // Lấy thông tin người dùng hiện tại từ SecurityContext
+        UserEntity currentUser = userRepository.findById(staffId).orElse(null);
+
+        // Kiểm tra nếu người dùng hiện tại có quyền MANAGER
+        if (currentUser != null && SecurityUtils.getAuthorities().contains("ROLE_MANAGER")) {
+            return true;
+        }
+
+        // Lấy thông tin khách hàng
+        CustomerEntity customerEntity = customerRepository.findById(customerId).orElse(null);
+
+        // Kiểm tra nếu khách hàng không tồn tại
+        if (customerEntity == null) {
+            return false;
+        }
+
+        // Lấy danh sách nhân viên được phân công cho khách hàng
+        List<UserEntity> assignedStaffs = customerEntity.getUserEntities();
+
+        // Kiểm tra nếu nhân viên hiện tại có trong danh sách được phân công
+        for (UserEntity staff : assignedStaffs) {
+            if (staff.getId().equals(staffId)) {
+                return true;
+            }
+        }
+
+        // Nếu không có quyền truy cập
+        return false;
+    }
+
 }
